@@ -1,0 +1,101 @@
+PERINTAH DARI MINDMAP
+WHERE
+menyaring data
+Operator =
+SELECT * FROM CUSTOMER WHERE Country = 'Mexico';
+Operator > < >= <= <> BETWEEN LIKE IN
+SELECT * FROM CUSTOMER WHERE City IN ('Paris','London');
+SELECT * FROM PRODUCT WHERE Price >= 30;
+SELECT * FROM PRODUCTWHERE Price BETWEEN 50 AND 60;
+SELECT * FROM CUSTOMER WHERE City LIKE 's%';
+AND, OR, NOT
+SELECT * FROM CUSTOMER WHERE Country = 'Germany' AND City = 'Berlin';
+SELECT * FROM CUSTOMER WHERE Country = 'Germany' OR Country = 'Spain';
+SELECT * FROM CUSTOMER WHERE NOT Country = 'Germany';
+IS NULL
+SELECT CustomerName, ContactName, Address FROM CUSTOMER WHERE Address IS NULL;
+MIN, MAX
+SELECT MIN(Price) AS SmallestPrice FROM PRODUCT;
+SELECT MAX(Price) AS LargestPrice FROM PRODUCT;
+UNION
+SELECT City FROM CUSTOMER UNION SELECT City FROM SupplierID ORDER BY City;
+ANY, ALL
+SELECT ProductName FROM PRODUCT WHERE ProductID = ANY   (SELECT ProductID   FROM OrderDetails   WHERE Quantity = 10);
+SELECT ALL ProductName FROM PRODUCT WHERE TRUE;
+SOME
+SELECT * FROM PRODUCT WHERE Price > SOME (SELECT Price FROM PRODUCT WHERE Price > 20);
+EXISTS
+SELECT * FROM PRODUCT WHERE EXISTS (SELECT Price FROM PRODUCT WHERE Price > 50);
+ROWID
+Rowid tertentu, kolom yang otomatis digenerate saat create table, untuk RDBMS MySQL, Oracle, SQLiteStudio
+SELECT *, rowid   FROM CUSTOMER   WHERE rowid  = 2;
+ORDER BY
+mengurutkan data
+ASC
+To sort the table alphabetically
+SELECT * FROM PRODUCT ORDER BY Price ASC;
+DESC
+To sort the table reverse alphabetically
+SELECT * FROM PRODUCT ORDER BY ProductName DESC;
+Using Both ASC and DESC
+SELECT * FROM CUSTOMER ORDER BY Country ASC, CustomerName DESC;
+LIMIT
+membatasi jumlah data yang ditamplkan
+SELECT id_pesanan, tanggal_pesan FROM pesanan LIMIT 10;
+GROUP BY
+COUNT, SUM, AVG
+fungsi agregat untuk melakukan perhitungan pada data yang dikelompokkan.
+SELECT kota, COUNT(*) AS jumlah_pelanggan FROM pelanggan GROUP BY kota;
+SELECT kolom_1, kolom_2, ... FROM nama_tabel;
+SELECT CustomerName, City, Country FROM CUSTOMER;
+ALIAS
+SELECT CustomerName AS Customer, ContactName AS "Contact Person" FROM CUSTOMER;
+SELECT CustomerID AS ID, CustomerName AS Customer FROM CUSTOMER;
+FROM lebih dari 1 tabel (tabel relasi)
+JOIN
+SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate FROM Orders INNER JOIN CUSTOMER ON Orders.CustomerID=Customers.CustomerID;
+SELECT O.OrderID, C.CustomerName, O.OrderDate FROM Orders O INNER JOIN CUSTOMER C ON O.CustomerID=C.CustomerID;
+Self JOIN
+SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City FROM Customers A, Customers B WHERE A.CustomerID <> B.CustomerID AND A.City = B.City ORDER BY A.City;
+UNION
+SELECT 1 AS table1 UNION SELECT 2 AS table1
+DISTINCT
+memilih data unik dari tabel
+SELECT DISTINCT kota FROM CUSTOMER;
+SELECT COUNT(DISTINCT Country) FROM CUSTOMER;
+CASE
+SELECT OrderID, Quantity, CASE     WHEN Quantity > 30 THEN 'The quantity is greater than 30'     WHEN Quantity = 30 THEN 'The quantity is 30'     ELSE 'The quantity is under 30' END AS QuantityText FROM OrderDetails;
+Fundamental SQL
+Data Manipulation Language (DML)
+SELECT
+Memilih dan mengambil data dari tabel basis data
+INSERT
+INSERT INTO SELECT
+INSERT INTO CUSTOMER (CustomerName, City, Country) SELECT SupplierName, City, Country FROM Suppliers;
+INSERT INTO CUSTOMER (CustomerName, City, Country) VALUES ('Cardinal', 'Stavanger', 'Norway');
+insert new records in a table.
+UPDATE
+modify the existing records in a table
+UPDATE CUSTOMER SET ContactName = 'Alfred Schmidt', City= 'Frankfurt' WHERE CustomerID = 1;
+UPDATE CUSTOMER SET ContactName='Juan' WHERE Country='Mexico';
+DELETE
+delete existing records in a table
+DELETE FROM CUSTOMER WHERE CustomerName='Alfreds Futterkiste';
+TOP
+the number of records to return
+SELECT TOP 50 PERCENT * FROM CUSTOMER;
+SELECT TOP 3 * FROM CUSTOMER WHERE Country='Germany';
+SELECT TOP 3 * FROM CUSTOMER ORDER BY CustomerName DESC;
+Data Definition Language (DDL)
+CREATE
+ALTER
+DROP
+Data Control Language (DCL)
+GRANT
+REVOKE
+Transaction Control Language (TCL)
+START TRANSACTION;
+END TRANSACTION;
+SAVEPOINT;
+COMMIT;
+ROLLBACK;
